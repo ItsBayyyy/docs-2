@@ -1795,8 +1795,393 @@ int main() {
     setColor(15);
     return 0;
 }`);
+        } else if (username === "bayu2"){
+            closeLoginPopup();
+            showLoginPopup(`#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <ctype.h>
+#include <windows.h>
+
+#define MAX_ITEMS 5
+#define MAX_NAME_LEN 50
+#define MAX_ADDRESS_LEN 100
+#define FILENAME_FORMAT "struk_%ld.txt"
+#define STORE_PHONE "0816285791"
+#define STORE_ADDRESS "Jl. HOS Cokroaminoto No. 84, Denpasar, Bali"
+
+typedef struct {
+    char name[20];
+    int price;
+    int quantity;
+    int discount;
+} Item;
+
+void setColor(int color) {
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, color);
+}
+
+// Prototipe fungsi
+void initialize_items(Item items[]);
+void display_menu(const Item items[]);
+void calculate_discounts(Item items[]);
+void sort_items(Item items[]);
+void process_checkout(Item items[]);
+void save_receipt(const Item items[], int total, int total_discount, int payment);
+void clear_input_buffer();
+int get_valid_input(const char *prompt, int min_val);
+void edit_selected_items(Item items[]);
+int is_cart_empty(const Item items[]);
+
+// Inisialisasi item
+void initialize_items(Item items[]) {
+    Item initial_items[MAX_ITEMS] = {
+        {"Buku Tulis", 5000, 0, 0},
+        {"Pensil", 2000, 0, 0},
+        {"Penghapus", 1000, 0, 0},
+        {"Penggaris", 1000, 0, 0},
+        {"Bujur Sangkar", 500, 0, 0}
+    };
+    memcpy(items, initial_items, sizeof(initial_items));
+}
+
+// Tampilan menu utama
+void display_menu(const Item items[]) {
+    system("cls || clear");
+    setColor(15);
+    printf("Selamat datang di Toko SKENSA./n");
+    printf("Silakan pilih barang yang Anda inginkan:/n/n");
+    printf("============================================/n");
+    printf("|No.| Barang               | Harga         |/n");
+    printf("============================================/n");
+    
+    int i;
+    for(i = 0; i < MAX_ITEMS; i++) {
+        printf("| %d | %-20s | Rp.%-10d |/n", 
+              i+1, items[i].name, items[i].price);
+    }
+    
+    printf("============================================/n");
+    printf("99. Struk Pembayaran/n");
+    printf("77. Edit Barang/n");
+    printf("55. Reset pilihan/n");
+    printf("00. Keluar/n");
+    printf("============================================/n");
+}
+
+// Hitung diskon
+void calculate_discounts(Item items[]) {
+    int i;
+    for(i = 0; i < MAX_ITEMS; i++) {
+        if(items[i].quantity > 5) {
+            items[i].discount = items[i].price * items[i].quantity * 15 / 100;
+        } else if(items[i].quantity > 3) {
+            items[i].discount = items[i].price * items[i].quantity * 10 / 100;
         } else {
-            alert('Invalid username!');
+            items[i].discount = 0;
+        }
+    }
+}
+
+// Urutkan item berdasarkan quantity
+void sort_items(Item items[]) {
+    int i, j;
+    for(i = 0; i < MAX_ITEMS-1; i++) {
+        for(j = 0; j < MAX_ITEMS-i-1; j++) {
+            if(items[j].quantity < items[j+1].quantity) {
+                Item temp = items[j];
+                items[j] = items[j+1];
+                items[j+1] = temp;
+            }
+        }
+    }
+}
+
+// Proses checkout
+void process_checkout(Item items[]) {
+    system("cls || clear");
+    int total = 0, total_discount = 0;
+    
+    calculate_discounts(items);
+    sort_items(items);
+
+    // Hitung total
+    int i;
+    for(i = 0; i < MAX_ITEMS; i++) {
+        if(items[i].quantity > 0) {
+            total += items[i].price * items[i].quantity;
+            total_discount += items[i].discount;
+        }
+    }
+
+    // Tampilkan rekapan
+    printf("/nRekap Pesanan Barang/n");
+    printf("==========================================================================/n");
+    printf("|%-3s| %-7s| %-15s| %-12s| %-14s| %-11s|/n", 
+           "No.", "Jumlah", "Nama Barang", "Harga", "Total Harga", "Diskon");
+    printf("==========================================================================/n");
+    
+    int counter = 1;
+    for(i = 0; i < MAX_ITEMS; i++) {
+        if(items[i].quantity > 0) {
+            int subtotal = items[i].price * items[i].quantity;
+            
+            char harga_str[20], total_str[20], diskon_str[20];
+            snprintf(harga_str, sizeof(harga_str), "Rp.%6d,-", items[i].price);
+            snprintf(total_str, sizeof(total_str), "Rp.%6d,-", subtotal);
+            snprintf(diskon_str, sizeof(diskon_str), "Rp.%6d,-", items[i].discount);
+            
+            printf("|%-3d| %-7d| %-15s| %-12s| %-14s| %-11s|/n",
+                   counter++,
+                   items[i].quantity,
+                   items[i].name,
+                   harga_str,
+                   total_str,
+                   diskon_str);
+        }
+    }
+    
+    printf("==========================================================================/n/n");
+    
+    char total_fmt[20], diskon_fmt[20], bayar_fmt[20];
+    snprintf(total_fmt, sizeof(total_fmt), "Rp.%6d,-", total);
+    snprintf(diskon_fmt, sizeof(diskon_fmt), "Rp.%6d,-", total_discount);
+    snprintf(bayar_fmt, sizeof(bayar_fmt), "Rp.%6d,-", total - total_discount);
+    
+    printf("%-15s = %-15s/n", "Total Harga", total_fmt);
+    printf("%-15s = %-15s/n", "Total Diskon", diskon_fmt);
+    printf("%-15s = %-15s/n", "Total Bayar", bayar_fmt);
+    printf("==========================================================================/n");
+    
+    int payment = get_valid_input("/nMasukkan uang bayar: Rp.", total - total_discount);
+    
+    int kembalian = payment - (total - total_discount);
+    char payment_fmt[20], kembalian_fmt[20];
+    snprintf(payment_fmt, sizeof(payment_fmt), "Rp.%d,-", payment);
+    snprintf(kembalian_fmt, sizeof(kembalian_fmt), "Rp.%d,-", kembalian);
+    
+    printf("/n%-15s = %-15s/n", "Pembayaran", payment_fmt);
+    printf("%-15s = %-15s/n", "Kembalian", kembalian_fmt);
+    
+    save_receipt(items, total, total_discount, payment);
+    setColor(2);
+    printf("/nStruk telah disimpan!/n");
+    setColor(15);
+    initialize_items(items); // Kosongkan keranjang setelah struk disimpan
+}
+
+// Simpan struk ke file
+void save_receipt(const Item items[], int total, int total_discount, int payment) {
+    time_t now = time(NULL);
+    char filename[50];
+    snprintf(filename, sizeof(filename), FILENAME_FORMAT, now);
+    
+    FILE *file = fopen(filename, "w");
+    if(!file) return;
+    
+    fprintf(file, "==========================================================/n");
+    fprintf(file, "|                       Toko SKENSA                      |/n");
+    fprintf(file, "|           Jl. HOS Cokroaminoto No. 84, Denpasar        |/n");
+    fprintf(file, "|                           Bali                         |/n");
+    fprintf(file, "|                      Telp : %s                 |/n", STORE_PHONE);
+    fprintf(file, "| ID Struk : %ld                                  |/n", now);
+    fprintf(file, "|========================================================|/n");
+    
+    fprintf(file, "| %-15s | %-10s | %-10s | %-10s |/n", 
+           "Nama Barang", "Harga", "Total", "Diskon");
+    fprintf(file, "|-----------------|------------|------------|------------|/n");
+    
+    int i;
+    for(i = 0; i < MAX_ITEMS; i++) {
+        if(items[i].quantity > 0) {
+            int subtotal = items[i].price * items[i].quantity;
+            fprintf(file, "| %-2dx%-12s | Rp.%-7d | Rp.%-7d | Rp.%-7d |/n",
+                  items[i].quantity,
+                  items[i].name,
+                  items[i].price,
+                  subtotal,
+                  items[i].discount);
+        }
+    }
+    
+    fprintf(file, "|========================================================|/n");
+    char temp[50];	
+    snprintf(temp, sizeof(temp), "Rp.%d,-", total);
+    fprintf(file, "| %-12s = %-40s|/n", "Total Harga", temp);
+
+    snprintf(temp, sizeof(temp), "Rp.%d,-", total_discount);
+    fprintf(file, "| %-12s = %-40s|/n", "Total Diskon", temp);
+
+    snprintf(temp, sizeof(temp), "Rp.%d,-", total - total_discount);
+    fprintf(file, "| %-12s = %-40s|/n", "Tagihan", temp);
+
+    snprintf(temp, sizeof(temp), "Rp.%d,-", payment);
+    fprintf(file, "| %-12s = %-40s|/n", "Pembayaran", temp);
+
+    snprintf(temp, sizeof(temp), "Rp.%d,-", payment - (total - total_discount));
+    fprintf(file, "| %-12s = %-40s|/n", "Kembalian", temp);
+    
+    char *time_str = ctime(&now);
+    time_str[strcspn(time_str, "/n")] = '\0';
+    fprintf(file, "|                                                        |/n");
+    fprintf(file, "| Waktu/Hari : %s                  |/n", time_str);
+    fprintf(file, "==========================================================/n");
+    
+    fclose(file);
+}
+
+// Validasi input
+int get_valid_input(const char *prompt, int min_val) {
+    int value;
+    while(1) {
+        printf("%s", prompt);
+        if(scanf("%d", &value) != 1) {
+            printf("Input tidak valid! ");
+            clear_input_buffer();
+            continue;
+        }
+        if(value >= min_val) break;
+        printf("Nilai harus >= %d! ", min_val);
+    }
+    return value;
+}
+
+void clear_input_buffer() {
+    int c;
+    while((c = getchar()) != '/n' && c != EOF);
+}
+
+// Fungsi untuk memeriksa apakah keranjang kosong
+int is_cart_empty(const Item items[]) {
+    int i;
+    for(i = 0; i < MAX_ITEMS; i++) {
+        if(items[i].quantity > 0) {
+            return 0; // Ada barang, tidak kosong
+        }
+    }
+    return 1; // Tidak ada barang, kosong
+}
+
+// Fungsi edit barang
+void edit_selected_items(Item items[]) {
+    system("cls || clear");
+    setColor(15);
+    printf("Daftar Barang yang Dipilih:/n");
+    printf("============================================/n");
+    printf("|No.| Barang               | Jumlah        |/n");
+    printf("============================================/n");
+
+    int i, counter = 0;
+    int selected_indices[MAX_ITEMS];
+    for(i = 0; i < MAX_ITEMS; i++) {
+        if(items[i].quantity > 0) {
+            printf("| %d | %-20s | %-13d |/n", 
+                  counter + 1, items[i].name, items[i].quantity);
+            selected_indices[counter] = i;
+            counter++;
+        }
+    }
+    printf("============================================/n");
+
+    char prompt[50];
+    snprintf(prompt, sizeof(prompt), "Pilih nomor barang untuk diedit (1-%d): ", counter);
+    int choice = get_valid_input(prompt, 1);
+    
+    if(choice > counter) {
+        setColor(12);
+        printf("Pilihan tidak valid!/n");
+        setColor(15);
+        return;
+    }
+
+    int selected_index = selected_indices[choice - 1];
+    printf("Barang: %s, Jumlah saat ini: %d/n", items[selected_index].name, items[selected_index].quantity);
+    int new_qty = get_valid_input("Masukkan jumlah baru (0 untuk hapus): ", 0);
+    
+    items[selected_index].quantity = new_qty;
+    setColor(10);
+    if(new_qty == 0) {
+        printf("%s telah dihapus dari daftar belanja!/n", items[selected_index].name);
+    } else {
+        printf("%s diperbarui menjadi %d unit!/n", items[selected_index].name, new_qty);
+    }
+    setColor(15);
+}
+
+int main() {
+    Item items[MAX_ITEMS];
+    initialize_items(items);
+    
+    while(1) {
+        display_menu(items);
+        printf("Masukkan kode produk: ");
+        int choice;
+        if(scanf("%d", &choice) != 1) {
+            clear_input_buffer();
+            setColor(12);
+            printf("Input tidak valid!/n");
+            setColor(15);
+            continue;
+        }
+        
+        if(choice == 0 || choice == 00) {
+            break;
+        }
+        else if(choice == 99) {
+            if(is_cart_empty(items)) {
+                setColor(12);
+                printf("Barang masih kosong!/n");
+                setColor(15);
+            } else {
+                process_checkout(items);
+            }
+        }
+        else if(choice == 77) {
+            if(is_cart_empty(items)) {
+                setColor(12);
+                printf("Barang masih kosong!/n");
+                setColor(15);
+            } else {
+                edit_selected_items(items);
+            }
+        }
+        else if(choice == 55) {
+            if(is_cart_empty(items)) {
+                setColor(12);
+                printf("Barang masih kosong!/n");
+                setColor(15);
+            } else {
+                initialize_items(items);
+                setColor(10);
+                printf("Pilihan telah direset!/n");
+                setColor(15);
+            }
+        }
+        else if(choice >= 1 && choice <= MAX_ITEMS) {
+            int qty = get_valid_input("Jumlah: ", 1);
+            items[choice-1].quantity += qty;
+            setColor(10);
+            printf("%s ditambahkan!/n", items[choice-1].name);
+            setColor(15);
+        }
+        else {
+            setColor(12);
+            printf("Pilihan salah!/n");
+            setColor(15);
+        }
+    
+        clear_input_buffer();
+        printf("/nTekan enter untuk lanjut...");
+        getchar();
+    }
+    
+    setColor(10);
+    printf("/nTerima kasih!/n");
+    setColor(15);
+    return 0;
+}`);
         }
     });
 </script>

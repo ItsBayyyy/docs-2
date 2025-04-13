@@ -1,0 +1,1872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C Programming Documentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .code-block {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            border-radius: 0.375rem;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        .keyword {
+            color: #f92672;
+        }
+        .type {
+            color: #66d9ef;
+        }
+        .string {
+            color: #e6db74;
+        }
+        .comment {
+            color: #75715e;
+        }
+        .function {
+            color: #a6e22e;
+        }
+        .preprocessor {
+            color: #ae81ff;
+        }
+        .sidebar-item.active {
+            background-color: #3b82f6;
+            color: white;
+        }
+        .sidebar-item:hover:not(.active) {
+            background-color: #e5e7eb;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        #copy-btn {
+            transition: all 0.2s;
+        }
+        #copy-btn.copied {
+            background-color: #10b981;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <div class="w-64 bg-gray-800 text-white overflow-y-auto">
+            <div class="p-4">
+                <h1 class="text-2xl font-bold flex items-center">
+                    <i class="fas fa-code mr-2"></i> C Docs
+                </h1>
+                <div class="mt-6">
+                    <div class="sidebar-item px-4 py-2 rounded cursor-pointer active" data-section="printf">
+                        <i class="fas fa-print mr-2"></i> printf()
+                    </div>
+                    <div class="sidebar-item px-4 py-2 rounded cursor-pointer" data-section="data-types">
+                        <i class="fas fa-database mr-2"></i> Data Types
+                    </div>
+                    <div class="sidebar-item px-4 py-2 rounded cursor-pointer" data-section="arithmetic">
+                        <i class="fas fa-calculator mr-2"></i> Arithmetic
+                    </div>
+                    <div class="sidebar-item px-4 py-2 rounded cursor-pointer" data-section="loops">
+                        <i class="fas fa-redo mr-2"></i> Loops
+                    </div>
+                    <div class="sidebar-item px-4 py-2 rounded cursor-pointer" data-section="branching">
+                        <i class="fas fa-code-branch mr-2"></i> Branching
+                    </div>
+                    <div class="sidebar-item px-4 py-2 rounded cursor-pointer" data-section="structs">
+                        <i class="fas fa-cubes mr-2"></i> Structs
+                    </div>
+                    <div class="sidebar-item px-4 py-2 rounded cursor-pointer" data-section="arrays">
+                        <i class="fas fa-layer-group mr-2"></i> Arrays
+                    </div>
+                    <div class="sidebar-item px-4 py-2 rounded cursor-pointer" data-section="define">
+                        <i class="fas fa-hashtag mr-2"></i> #define
+                    </div>
+                    <div class="sidebar-item px-4 py-2 rounded cursor-pointer" data-section="libraries">
+                        <i class="fas fa-book mr-2"></i> Libraries
+                    </div>
+                    <div class="sidebar-item px-4 py-2 rounded cursor-pointer" data-section="file-io">
+                        <i class="fas fa-file-export mr-2"></i> File I/O
+                    </div>
+                    <div class="sidebar-item px-4 py-2 rounded cursor-pointer bg-blue-500" data-section="file-io" onclick="showLoginPopup()">
+                        <i class="fa-solid fa-user mr-2"></i> Login
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 overflow-y-auto p-8">
+            <!-- Printf Section -->
+            <div class="content-section active" id="printf">
+                <h2 class="text-3xl font-bold mb-6 flex items-center">
+                    <i class="fas fa-print mr-3 text-blue-500"></i> printf() Function
+                </h2>
+                <div class="bg-white rounded-lg shadow p-6 mb-6">
+                    <p class="mb-4">The <span class="font-mono bg-gray-100 px-2 py-1 rounded">printf()</span> function is used to print formatted output to the standard output (usually the console).</p>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Syntax</h3>
+                    <div class="code-block relative">
+                        <button id="copy-btn" class="absolute top-2 right-2 bg-gray-700 text-white px-2 py-1 rounded text-sm">Copy</button>
+                        <pre><code><span class="type">int</span> <span class="function">printf</span>(<span class="keyword">const</span> <span class="type">char</span> *format, ...);</code></pre>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Format Specifiers</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border border-gray-200">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="py-2 px-4 border-b">Specifier</th>
+                                    <th class="py-2 px-4 border-b">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">%d or %i</td>
+                                    <td class="py-2 px-4 border-b">Signed decimal integer</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">%u</td>
+                                    <td class="py-2 px-4 border-b">Unsigned decimal integer</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">%f</td>
+                                    <td class="py-2 px-4 border-b">Decimal floating point</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">%c</td>
+                                    <td class="py-2 px-4 border-b">Character</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">%s</td>
+                                    <td class="py-2 px-4 border-b">String</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">%p</td>
+                                    <td class="py-2 px-4 border-b">Pointer address</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Examples</h3>
+                    <div class="code-block mb-4">
+                        <pre><code><span class="comment">// Basic printf examples</span>
+<span class="function">printf</span>(<span class="string">"Hello, World!\n"</span>);
+<span class="function">printf</span>(<span class="string">"Integer: %d, Float: %.2f, Char: %c\n"</span>, <span class="number">42</span>, <span class="number">3.14159</span>, <span class="string">'A'</span>);</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Types Section -->
+            <div class="content-section" id="data-types">
+                <h2 class="text-3xl font-bold mb-6 flex items-center">
+                    <i class="fas fa-database mr-3 text-blue-500"></i> Data Types
+                </h2>
+                <div class="bg-white rounded-lg shadow p-6 mb-6">
+                    <p class="mb-4">C has several built-in data types that can be used to declare variables.</p>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Basic Data Types</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border border-gray-200">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="py-2 px-4 border-b">Type</th>
+                                    <th class="py-2 px-4 border-b">Size (bytes)</th>
+                                    <th class="py-2 px-4 border-b">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">char</td>
+                                    <td class="py-2 px-4 border-b">1</td>
+                                    <td class="py-2 px-4 border-b">Character or small integer</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">int</td>
+                                    <td class="py-2 px-4 border-b">4</td>
+                                    <td class="py-2 px-4 border-b">Integer</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">float</td>
+                                    <td class="py-2 px-4 border-b">4</td>
+                                    <td class="py-2 px-4 border-b">Single-precision floating point</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">double</td>
+                                    <td class="py-2 px-4 border-b">8</td>
+                                    <td class="py-2 px-4 border-b">Double-precision floating point</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">void</td>
+                                    <td class="py-2 px-4 border-b">-</td>
+                                    <td class="py-2 px-4 border-b">No type</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Type Modifiers</h3>
+                    <p class="mb-2">Type modifiers can alter the meaning of basic data types:</p>
+                    <ul class="list-disc pl-6 mb-4">
+                        <li><span class="font-mono">signed</span> - Default for char and int (numbers can be positive or negative)</li>
+                        <li><span class="font-mono">unsigned</span> - Only positive numbers</li>
+                        <li><span class="font-mono">short</span> - Smaller size than int</li>
+                        <li><span class="font-mono">long</span> - Larger size than int</li>
+                    </ul>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Examples</h3>
+                    <div class="code-block">
+                        <pre><code><span class="comment">// Variable declarations</span>
+<span class="type">char</span> letter = <span class="string">'A'</span>;
+<span class="type">int</span> age = <span class="number">25</span>;
+<span class="type">float</span> temperature = <span class="number">98.6</span>;
+<span class="type">double</span> pi = <span class="number">3.1415926535</span>;
+<span class="type">unsigned int</span> positiveNumber = <span class="number">100</span>;
+<span class="type">long long</span> bigNumber = <span class="number">123456789012345</span>;</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Arithmetic Section -->
+            <div class="content-section" id="arithmetic">
+                <h2 class="text-3xl font-bold mb-6 flex items-center">
+                    <i class="fas fa-calculator mr-3 text-blue-500"></i> Arithmetic Operations
+                </h2>
+                <div class="bg-white rounded-lg shadow p-6 mb-6">
+                    <p class="mb-4">C supports various arithmetic operations for performing calculations.</p>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Basic Arithmetic Operators</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border border-gray-200">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="py-2 px-4 border-b">Operator</th>
+                                    <th class="py-2 px-4 border-b">Description</th>
+                                    <th class="py-2 px-4 border-b">Example</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">+</td>
+                                    <td class="py-2 px-4 border-b">Addition</td>
+                                    <td class="py-2 px-4 border-b">a + b</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">-</td>
+                                    <td class="py-2 px-4 border-b">Subtraction</td>
+                                    <td class="py-2 px-4 border-b">a - b</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">*</td>
+                                    <td class="py-2 px-4 border-b">Multiplication</td>
+                                    <td class="py-2 px-4 border-b">a * b</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">/</td>
+                                    <td class="py-2 px-4 border-b">Division</td>
+                                    <td class="py-2 px-4 border-b">a / b</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">%</td>
+                                    <td class="py-2 px-4 border-b">Modulus (remainder)</td>
+                                    <td class="py-2 px-4 border-b">a % b</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Compound Assignment Operators</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border border-gray-200">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="py-2 px-4 border-b">Operator</th>
+                                    <th class="py-2 px-4 border-b">Equivalent to</th>
+                                    <th class="py-2 px-4 border-b">Example</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">+=</td>
+                                    <td class="py-2 px-4 border-b">a = a + b</td>
+                                    <td class="py-2 px-4 border-b">a += b</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">-=</td>
+                                    <td class="py-2 px-4 border-b">a = a - b</td>
+                                    <td class="py-2 px-4 border-b">a -= b</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">*=</td>
+                                    <td class="py-2 px-4 border-b">a = a * b</td>
+                                    <td class="py-2 px-4 border-b">a *= b</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">/=</td>
+                                    <td class="py-2 px-4 border-b">a = a / b</td>
+                                    <td class="py-2 px-4 border-b">a /= b</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">%=</td>
+                                    <td class="py-2 px-4 border-b">a = a % b</td>
+                                    <td class="py-2 px-4 border-b">a %= b</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Examples</h3>
+                    <div class="code-block">
+                        <pre><code><span class="type">int</span> a = <span class="number">10</span>, b = <span class="number">3</span>;
+<span class="type">int</span> sum = a + b;      <span class="comment">// 13</span>
+<span class="type">int</span> difference = a - b; <span class="comment">// 7</span>
+<span class="type">int</span> product = a * b;   <span class="comment">// 30</span>
+<span class="type">float</span> quotient = (<span class="type">float</span>)a / b; <span class="comment">// 3.333...</span>
+<span class="type">int</span> remainder = a % b; <span class="comment">// 1</span>
+
+a += <span class="number">5</span>;  <span class="comment">// a is now 15</span>
+b *= <span class="number">2</span>;  <span class="comment">// b is now 6</span></code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loops Section -->
+            <div class="content-section" id="loops">
+                <h2 class="text-3xl font-bold mb-6 flex items-center">
+                    <i class="fas fa-redo mr-3 text-blue-500"></i> Loops
+                </h2>
+                <div class="bg-white rounded-lg shadow p-6 mb-6">
+                    <p class="mb-4">Loops are used to execute a block of code repeatedly until a specified condition is met.</p>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Types of Loops</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border border-gray-200">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="py-2 px-4 border-b">Loop Type</th>
+                                    <th class="py-2 px-4 border-b">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">while</td>
+                                    <td class="py-2 px-4 border-b">Repeats a block while condition is true</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">do-while</td>
+                                    <td class="py-2 px-4 border-b">Executes once, then repeats while condition is true</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">for</td>
+                                    <td class="py-2 px-4 border-b">Repeats a block for a specific number of times</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Examples</h3>
+                    <div class="code-block mb-4">
+                        <pre><code><span class="comment">// while loop</span>
+<span class="type">int</span> i = <span class="number">0</span>;
+<span class="keyword">while</span> (i &lt; <span class="number">5</span>) {
+    <span class="function">printf</span>(<span class="string">"%d "</span>, i);
+    i++;
+} <span class="comment">// Output: 0 1 2 3 4</span>
+
+<span class="comment">// do-while loop</span>
+<span class="type">int</span> j = <span class="number">0</span>;
+<span class="keyword">do</span> {
+    <span class="function">printf</span>(<span class="string">"%d "</span>, j);
+    j++;
+} <span class="keyword">while</span> (j &lt; <span class="number">5</span>); <span class="comment">// Output: 0 1 2 3 4</span>
+
+<span class="comment">// for loop</span>
+<span class="keyword">for</span> (<span class="type">int</span> k = <span class="number">0</span>; k &lt; <span class="number">5</span>; k++) {
+    <span class="function">printf</span>(<span class="string">"%d "</span>, k);
+} <span class="comment">// Output: 0 1 2 3 4</span></code></pre>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Loop Control Statements</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border border-gray-200">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="py-2 px-4 border-b">Statement</th>
+                                    <th class="py-2 px-4 border-b">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">break</td>
+                                    <td class="py-2 px-4 border-b">Terminates the loop immediately</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">continue</td>
+                                    <td class="py-2 px-4 border-b">Skips the current iteration and continues with the next</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Branching Section -->
+            <div class="content-section" id="branching">
+                <h2 class="text-3xl font-bold mb-6 flex items-center">
+                    <i class="fas fa-code-branch mr-3 text-blue-500"></i> Branching
+                </h2>
+                <div class="bg-white rounded-lg shadow p-6 mb-6">
+                    <p class="mb-4">Branching statements allow your program to make decisions and execute different code blocks based on conditions.</p>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">if Statement</h3>
+                    <div class="code-block mb-4">
+                        <pre><code><span class="keyword">if</span> (condition) {
+    <span class="comment">// code to execute if condition is true</span>
+}</code></pre>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">if-else Statement</h3>
+                    <div class="code-block mb-4">
+                        <pre><code><span class="keyword">if</span> (condition) {
+    <span class="comment">// code to execute if condition is true</span>
+} <span class="keyword">else</span> {
+    <span class="comment">// code to execute if condition is false</span>
+}</code></pre>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">else-if Ladder</h3>
+                    <div class="code-block mb-4">
+                        <pre><code><span class="keyword">if</span> (condition1) {
+    <span class="comment">// code if condition1 is true</span>
+} <span class="keyword">else if</span> (condition2) {
+    <span class="comment">// code if condition2 is true</span>
+} <span class="keyword">else</span> {
+    <span class="comment">// code if all conditions are false</span>
+}</code></pre>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">switch Statement</h3>
+                    <div class="code-block mb-4">
+                        <pre><code><span class="keyword">switch</span> (expression) {
+    <span class="keyword">case</span> value1:
+        <span class="comment">// code for value1</span>
+        <span class="keyword">break</span>;
+    <span class="keyword">case</span> value2:
+        <span class="comment">// code for value2</span>
+        <span class="keyword">break</span>;
+    <span class="keyword">default</span>:
+        <span class="comment">// code if no cases match</span>
+}</code></pre>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Ternary Operator</h3>
+                    <div class="code-block mb-4">
+                        <pre><code>result = condition ? value_if_true : value_if_false;</code></pre>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Examples</h3>
+                    <div class="code-block">
+                        <pre><code><span class="comment">// if-else example</span>
+<span class="type">int</span> num = <span class="number">10</span>;
+<span class="keyword">if</span> (num > <span class="number">0</span>) {
+    <span class="function">printf</span>(<span class="string">"Positive number\n"</span>);
+} <span class="keyword">else if</span> (num < <span class="number">0</span>) {
+    <span class="function">printf</span>(<span class="string">"Negative number\n"</span>);
+} <span class="keyword">else</span> {
+    <span class="function">printf</span>(<span class="string">"Zero\n"</span>);
+}
+
+<span class="comment">// switch example</span>
+<span class="type">char</span> grade = <span class="string">'B'</span>;
+<span class="keyword">switch</span> (grade) {
+    <span class="keyword">case</span> <span class="string">'A'</span>:
+        <span class="function">printf</span>(<span class="string">"Excellent!\n"</span>);
+        <span class="keyword">break</span>;
+    <span class="keyword">case</span> <span class="string">'B'</span>:
+        <span class="function">printf</span>(<span class="string">"Well done\n"</span>);
+        <span class="keyword">break</span>;
+    <span class="keyword">default</span>:
+        <span class="function">printf</span>(<span class="string">"Invalid grade\n"</span>);
+}
+
+<span class="comment">// ternary operator example</span>
+<span class="type">int</span> a = <span class="number">5</span>, b = <span class="number">10</span>;
+<span class="type">int</span> max = (a > b) ? a : b;</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Structs Section -->
+            <div class="content-section" id="structs">
+                <h2 class="text-3xl font-bold mb-6 flex items-center">
+                    <i class="fas fa-cubes mr-3 text-blue-500"></i> Structures
+                </h2>
+                <div class="bg-white rounded-lg shadow p-6 mb-6">
+                    <p class="mb-4">Structures (structs) allow you to create custom data types that group together variables of different types.</p>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Defining a Structure</h3>
+                    <div class="code-block mb-4">
+                        <pre><code><span class="keyword">struct</span> structureName {
+    <span class="type">dataType</span> member1;
+    <span class="type">dataType</span> member2;
+    <span class="comment">// ... more members</span>
+};</code></pre>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Declaring Structure Variables</h3>
+                    <div class="code-block mb-4">
+                        <pre><code><span class="comment">// Method 1: Declare when defining</span>
+<span class="keyword">struct</span> Person {
+    <span class="type">char</span> name[<span class="number">50</span>];
+    <span class="type">int</span> age;
+    <span class="type">float</span> height;
+} person1, person2;
+
+<span class="comment">// Method 2: Declare separately</span>
+<span class="keyword">struct</span> Person person3;</code></pre>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Accessing Structure Members</h3>
+                    <div class="code-block mb-4">
+                        <pre><code><span class="comment">// Using dot operator</span>
+<span class="keyword">struct</span> Person p1;
+<span class="function">strcpy</span>(p1.name, <span class="string">"John"</span>);
+p1.age = <span class="number">30</span>;
+p1.height = <span class="number">5.9</span>;
+
+<span class="comment">// Using pointer and arrow operator</span>
+<span class="keyword">struct</span> Person *ptr = &p1;
+<span class="function">printf</span>(<span class="string">"Name: %s\n"</span>, ptr->name);</code></pre>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">typedef with Structures</h3>
+                    <div class="code-block mb-4">
+                        <pre><code><span class="comment">// Creates an alias for the structure</span>
+<span class="keyword">typedef</span> <span class="keyword">struct</span> {
+    <span class="type">char</span> make[<span class="number">20</span>];
+    <span class="type">int</span> year;
+} Car;
+
+<span class="comment">// Now we can declare variables without 'struct' keyword</span>
+Car myCar;</code></pre>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Nested Structures</h3>
+                    <div class="code-block">
+                        <pre><code><span class="keyword">struct</span> Address {
+    <span class="type">char</span> street[<span class="number">50</span>];
+    <span class="type">char</span> city[<span class="number">30</span>];
+};
+
+<span class="keyword">struct</span> Employee {
+    <span class="type">char</span> name[<span class="number">50</span>];
+    <span class="type">int</span> id;
+    <span class="keyword">struct</span> Address addr; <span class="comment">// Nested structure</span>
+};
+
+<span class="keyword">struct</span> Employee emp1;
+<span class="function">strcpy</span>(emp1.addr.city, <span class="string">"New York"</span>);</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Arrays Section -->
+            <div class="content-section" id="arrays">
+                <h2 class="text-3xl font-bold mb-6 flex items-center">
+                    <i class="fas fa-layer-group mr-3 text-blue-500"></i> Arrays
+                </h2>
+                <div class="bg-white rounded-lg shadow p-6 mb-6">
+                    <p class="mb-4">Arrays are used to store multiple values of the same type in a single variable.</p>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Declaring Arrays</h3>
+                    <div class="code-block mb-4">
+                        <pre><code><span class="type">dataType</span> arrayName[arraySize];</code></pre>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Initializing Arrays</h3>
+                    <div class="code-block mb-4">
+                        <pre><code><span class="comment">// Method 1: Initialize at declaration</span>
+<span class="type">int</span> numbers[<span class="number">5</span>] = {<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>};
+
+<span class="comment">// Method 2: Initialize without size</span>
+<span class="type">float</span> temperatures[] = {<span class="number">98.6</span>, <span class="number">99.2</span>, <span class="number">97.8</span>};
+
+<span class="comment">// Method 3: Initialize element by element</span>
+<span class="type">char</span> vowels[<span class="number">5</span>];
+vowels[<span class="number">0</span>] = <span class="string">'a'</span>;
+vowels[<span class="number">1</span>] = <span class="string">'e'</span>;
+<span class="comment">// ...</span></code></pre>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Accessing Array Elements</h3>
+                    <div class="code-block mb-4">
+                        <pre><code><span class="type">int</span> numbers[<span class="number">3</span>] = {<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>};
+<span class="type">int</span> first = numbers[<span class="number">0</span>]; <span class="comment">// 10</span>
+numbers[<span class="number">1</span>] = <span class="number">25</span>;       <span class="comment">// Change second element to 25</span></code></pre>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Multidimensional Arrays</h3>
+                    <div class="code-block mb-4">
+                        <pre><code><span class="comment">// 2D array (matrix)</span>
+<span class="type">int</span> matrix[<span class="number">2</span>][<span class="number">3</span>] = {
+    {<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>},
+    {<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>}
+};
+
+<span class="comment">// Accessing elements</span>
+<span class="type">int</span> val = matrix[<span class="number">1</span>][<span class="number">2</span>]; <span class="comment">// 6</span></code></pre>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Arrays and Functions</h3>
+                    <div class="code-block">
+                        <pre><code><span class="comment">// Passing array to function</span>
+<span class="type">void</span> <span class="function">printArray</span>(<span class="type">int</span> arr[], <span class="type">int</span> size) {
+    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; size; i++) {
+        <span class="function">printf</span>(<span class="string">"%d "</span>, arr[i]);
+    }
+}
+
+<span class="type">int</span> <span class="function">main</span>() {
+    <span class="type">int</span> numbers[<span class="number">5</span>] = {<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>};
+    <span class="function">printArray</span>(numbers, <span class="number">5</span>);
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Define Section -->
+            <div class="content-section" id="define">
+                <h2 class="text-3xl font-bold mb-6 flex items-center">
+                    <i class="fas fa-hashtag mr-3 text-blue-500"></i> #define Directive
+                </h2>
+                <div class="bg-white rounded-lg shadow p-6 mb-6">
+                    <p class="mb-4">The <span class="font-mono bg-gray-100 px-2 py-1 rounded">#define</span> directive is used to create macros, which are fragments of code that are replaced by the preprocessor before compilation.</p>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Simple Macros</h3>
+                    <div class="code-block mb-4">
+                        <pre><code><span class="preprocessor">#define</span> PI <span class="number">3.14159</span>
+<span class="preprocessor">#define</span> MAX_SIZE <span class="number">100</span>
+<span class="preprocessor">#define</span> GREETING <span class="string">"Hello, World!"</span></code></pre>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Function-like Macros</h3>
+                    <div class="code-block mb-4">
+                        <pre><code><span class="preprocessor">#define</span> SQUARE(x) ((x) * (x))
+<span class="preprocessor">#define</span> MAX(a, b) (((a) > (b)) ? (a) : (b))
+
+<span class="comment">// Usage:</span>
+<span class="type">int</span> result = SQUARE(<span class="number">5</span>); <span class="comment">// 25</span>
+<span class="type">int</span> bigger = MAX(<span class="number">10</span>, <span class="number">20</span>); <span class="comment">// 20</span></code></pre>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Multi-line Macros</h3>
+                    <div class="code-block mb-4">
+                        <pre><code><span class="preprocessor">#define</span> PRINT_ERROR(msg) \
+    <span class="function">printf</span>(<span class="string">"Error: %s\n"</span>, msg); \
+    <span class="function">printf</span>(<span class="string">"File: %s, Line: %d\n"</span>, __FILE__, __LINE__)</code></pre>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Predefined Macros</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border border-gray-200">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="py-2 px-4 border-b">Macro</th>
+                                    <th class="py-2 px-4 border-b">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">__DATE__</td>
+                                    <td class="py-2 px-4 border-b">Current date as a string</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">__TIME__</td>
+                                    <td class="py-2 px-4 border-b">Current time as a string</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">__FILE__</td>
+                                    <td class="py-2 px-4 border-b">Current filename as a string</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">__LINE__</td>
+                                    <td class="py-2 px-4 border-b">Current line number as an integer</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Conditional Compilation</h3>
+                    <div class="code-block">
+                        <pre><code><span class="preprocessor">#define</span> DEBUG <span class="number">1</span>
+
+<span class="preprocessor">#if</span> DEBUG
+    <span class="function">printf</span>(<span class="string">"Debug mode is on\n"</span>);
+<span class="preprocessor">#else</span>
+    <span class="function">printf</span>(<span class="string">"Debug mode is off\n"</span>);
+<span class="preprocessor">#endif</span></code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Libraries Section -->
+            <div class="content-section" id="libraries">
+                <h2 class="text-3xl font-bold mb-6 flex items-center">
+                    <i class="fas fa-book mr-3 text-blue-500"></i> Standard Libraries
+                </h2>
+                <div class="bg-white rounded-lg shadow p-6 mb-6">
+                    <p class="mb-4">C provides standard libraries that contain functions for common operations. These libraries are included using the <span class="font-mono bg-gray-100 px-2 py-1 rounded">#include</span> directive.</p>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Common Standard Libraries</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border border-gray-200">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="py-2 px-4 border-b">Library</th>
+                                    <th class="py-2 px-4 border-b">Description</th>
+                                    <th class="py-2 px-4 border-b">Example Functions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">stdio.h</td>
+                                    <td class="py-2 px-4 border-b">Standard Input/Output</td>
+                                    <td class="py-2 px-4 border-b">printf, scanf, fopen, fclose</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">stdlib.h</td>
+                                    <td class="py-2 px-4 border-b">Standard Library</td>
+                                    <td class="py-2 px-4 border-b">malloc, free, exit, rand</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">string.h</td>
+                                    <td class="py-2 px-4 border-b">String Operations</td>
+                                    <td class="py-2 px-4 border-b">strcpy, strlen, strcmp</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">math.h</td>
+                                    <td class="py-2 px-4 border-b">Mathematical Functions</td>
+                                    <td class="py-2 px-4 border-b">sqrt, pow, sin, cos</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">time.h</td>
+                                    <td class="py-2 px-4 border-b">Time and Date</td>
+                                    <td class="py-2 px-4 border-b">time, clock, difftime</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Including Libraries</h3>
+                    <div class="code-block mb-4">
+                        <pre><code><span class="preprocessor">#include</span> <span class="string">&lt;stdio.h&gt;</span>  <span class="comment">// Standard I/O functions</span>
+<span class="preprocessor">#include</span> <span class="string">&lt;math.h&gt;</span>   <span class="comment">// Math functions</span>
+<span class="preprocessor">#include</span> <span class="string">"myheader.h"</span> <span class="comment">// User-defined header</span></code></pre>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Example Usage</h3>
+                    <div class="code-block">
+                        <pre><code><span class="preprocessor">#include</span> <span class="string">&lt;stdio.h&gt;</span>
+<span class="preprocessor">#include</span> <span class="string">&lt;string.h&gt;</span>
+<span class="preprocessor">#include</span> <span class="string">&lt;math.h&gt;</span>
+
+<span class="type">int</span> <span class="function">main</span>() {
+    <span class="type">char</span> str1[<span class="number">20</span>] = <span class="string">"Hello"</span>;
+    <span class="type">char</span> str2[<span class="number">20</span>] = <span class="string">"World"</span>;
+    
+    <span class="function">strcat</span>(str1, str2); <span class="comment">// Concatenate strings</span>
+    <span class="function">printf</span>(<span class="string">"%s\n"</span>, str1); <span class="comment">// "HelloWorld"</span>
+    
+    <span class="type">double</span> root = <span class="function">sqrt</span>(<span class="number">25.0</span>); <span class="comment">// Square root</span>
+    <span class="function">printf</span>(<span class="string">"Square root: %.2f\n"</span>, root); <span class="comment">// 5.00</span>
+    
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- File I/O Section -->
+            <div class="content-section" id="file-io">
+                <h2 class="text-3xl font-bold mb-6 flex items-center">
+                    <i class="fas fa-file-export mr-3 text-blue-500"></i> File Input/Output
+                </h2>
+                <div class="bg-white rounded-lg shadow p-6 mb-6">
+                    <p class="mb-4">C provides functions for reading from and writing to files. File operations are performed using the <span class="font-mono bg-gray-100 px-2 py-1 rounded">FILE</span> pointer.</p>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Opening a File</h3>
+                    <div class="code-block mb-4">
+                        <pre><code>FILE *filePointer;
+filePointer = fopen("filename.txt", "mode");</code></pre>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">File Modes</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border border-gray-200">
+                            <thead class="bg-gray-100">
+                                <tr>
+                                    <th class="py-2 px-4 border-b">Mode</th>
+                                    <th class="py-2 px-4 border-b">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">"r"</td>
+                                    <td class="py-2 px-4 border-b">Open for reading (file must exist)</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">"w"</td>
+                                    <td class="py-2 px-4 border-b">Open for writing (creates new or truncates existing)</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">"a"</td>
+                                    <td class="py-2 px-4 border-b">Open for appending (creates new if doesn't exist)</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">"r+"</td>
+                                    <td class="py-2 px-4 border-b">Open for reading and writing (file must exist)</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">"w+"</td>
+                                    <td class="py-2 px-4 border-b">Open for reading and writing (creates new or truncates)</td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-4 border-b">"a+"</td>
+                                    <td class="py-2 px-4 border-b">Open for reading and appending</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Closing a File</h3>
+                    <div class="code-block mb-4">
+                        <pre><code>fclose(filePointer);</code></pre>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Writing to a File</h3>
+                    <div class="code-block mb-4">
+                        <pre><code><span class="comment">// Write formatted data</span>
+<span class="function">fprintf</span>(filePointer, <span class="string">"Formatted data: %d %f %s\n"</span>, intVar, floatVar, stringVar);
+
+<span class="comment">// Write a character</span>
+<span class="function">fputc</span>(<span class="string">'A'</span>, filePointer);
+
+<span class="comment">// Write a string</span>
+<span class="function">fputs</span>(<span class="string">"Hello, File!\n"</span>, filePointer);</code></pre>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Reading from a File</h3>
+                    <div class="code-block mb-4">
+                        <pre><code><span class="comment">// Read formatted data</span>
+<span class="function">fscanf</span>(filePointer, <span class="string">"%d %f %s"</span>, &intVar, &floatVar, stringVar);
+
+<span class="comment">// Read a character</span>
+<span class="type">char</span> ch = <span class="function">fgetc</span>(filePointer);
+
+<span class="comment">// Read a string (until newline or EOF)</span>
+<span class="function">fgets</span>(buffer, size, filePointer);</code></pre>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">Complete Example</h3>
+                    <div class="code-block">
+                        <pre><code><span class="preprocessor">#include</span> <span class="string">&lt;stdio.h&gt;</span>
+
+<span class="type">int</span> <span class="function">main</span>() {
+    <span class="comment">// Writing to a file</span>
+    FILE *fptr = fopen("example.txt", "w");
+    <span class="keyword">if</span> (fptr == NULL) {
+        <span class="function">printf</span>(<span class="string">"Error opening file!\n"</span>);
+        <span class="keyword">return</span> <span class="number">1</span>;
+    }
+    
+    <span class="function">fprintf</span>(fptr, <span class="string">"This is a test file.\n"</span>);
+    <span class="function">fprintf</span>(fptr, <span class="string">"Writing numbers: %d %f\n"</span>, <span class="number">42</span>, <span class="number">3.14159</span>);
+    <span class="function">fclose</span>(fptr);
+    
+    <span class="comment">// Reading from a file</span>
+    fptr = fopen("example.txt", "r");
+    <span class="type">char</span> buffer[<span class="number">100</span>];
+    
+    <span class="keyword">while</span> (<span class="function">fgets</span>(buffer, <span class="number">100</span>, fptr) != NULL) {
+        <span class="function">printf</span>(<span class="string">"%s"</span>, buffer);
+    }
+    
+    <span class="function">fclose</span>(fptr);
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- HTML untuk popup login -->
+<div id="loginPopup" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+        <h2 class="text-xl font-bold mb-4">Login</h2>
+        <form id="loginForm">
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-1" for="username">Username</label>
+                <input type="text" id="username" class="w-full p-2 border rounded" placeholder="Enter username" required>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-1" for="password">Password</label>
+                <input type="password" id="password" class="w-full p-2 border rounded" placeholder="Enter password">
+            </div>
+            <div class="flex justify-end">
+                <button type="button" class="px-4 py-2 mr-2 bg-gray-300 rounded" onclick="closeLoginPopup()">Cancel</button>
+                <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded">Login</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- HTML untuk popup salin -->
+<div id="copyPopup" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-80">
+        <h2 class="text-lg font-bold mb-4">Copy Text</h2>
+        <p class="mb-4">Ingat! /n adalah \n</p>
+        <p id="textToCopy" class="mb-4 hidden"></p>
+        <div class="flex justify-end">
+            <button type="button" class="px-4 py-2 mr-2 bg-gray-300 rounded" onclick="closeCopyPopup()">Close</button>
+            <button type="button" id="copyButton" class="px-4 py-2 bg-blue-500 text-white rounded" onclick="copyText()">Copy</button>
+        </div>
+    </div>
+</div>
+
+<!-- CSS untuk styling -->
+<style>
+    .fixed.inset-0 {
+        z-index: 1000;
+    }
+    .hidden {
+        display: none;
+    }
+</style>
+
+<!-- JavaScript untuk logika -->
+<script>
+    // Fungsi untuk menampilkan popup login
+    function showLoginPopup() {
+        document.getElementById('loginPopup').classList.remove('hidden');
+    }
+
+    // Fungsi untuk menutup popup login
+    function closeLoginPopup() {
+        document.getElementById('loginPopup').classList.add('hidden');
+    }
+
+    // Fungsi untuk menampilkan popup salin
+    function showCopyPopup(text) {
+        document.getElementById('textToCopy').textContent = text;
+        document.getElementById('copyPopup').classList.remove('hidden');
+    }
+
+    // Fungsi untuk menutup popup salin
+    function closeCopyPopup() {
+        document.getElementById('copyPopup').classList.add('hidden');
+    }
+
+    // Fungsi untuk menyalin teks
+    function copyText() {
+        const text = document.getElementById('textToCopy').textContent;
+        navigator.clipboard.writeText(text).then(() => {
+            console.log('Text copied to clipboard!');
+        }).catch(err => {
+            console.error('Failed to copy text: ', err);
+        });
+    }
+
+    // Tangani submit form login
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Mencegah reload halaman
+        const username = document.getElementById('username').value;
+
+        // Periksa username
+        if (username === 'agus') {
+            closeLoginPopup();
+            showCopyPopup(`#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#define N 5
+
+typedef struct {
+    char name[50];
+    int price;
+    int qty;
+} Product;
+
+void genFile(char *fname) {
+    time_t t = time(NULL);
+    struct tm *tm_ptr = localtime(&t);
+    strftime(fname, 100, "struk_%Y%m%d_%H%M%S.txt", tm_ptr);
+}
+
+void header() {
+    // Tampilan header sesuai desain awal
+    printf("========================================/n");
+    printf("   Selamat datang di Toko SKENSA/n");
+    printf("Silakan pilih barang yang Anda inginkan:/n");
+    printf("========================================/n");
+    printf("|No | Barang        | Harga          |/n");
+    printf("========================================/n");
+    printf("| 1 | Buku Tulis    | Rp.5000        |/n");
+    printf("| 2 | Pensil        | Rp.2000        |/n");
+    printf("| 3 | Penghapus     | Rp.1000        |/n");
+    printf("| 4 | Penggaris     | Rp.1000        |/n");
+    printf("| 5 | Bujur Sangkar | Rp.500         |/n");
+    printf("========================================/n");
+    printf("99. Struk Pembayaran/n");
+    printf("55. Reset Pesanan/n");
+    printf("00. Keluar/n");
+    printf("========================================/n");
+}
+
+void orderSum(Product prod[]) {
+    int i;
+    printf("--------------- Rekap Pesanan ---------------/n");
+    printf("| No | Barang         | Jumlah | Total Harga |/n");
+    printf("---------------------------------------------/n");
+    for (i = 0; i < N; i++) {
+        if (prod[i].qty > 0)
+            printf("| %-2d | %-14s | %-6d | Rp.%-10d |/n", i+1, prod[i].name, prod[i].qty, prod[i].qty * prod[i].price);
+    }
+    printf("---------------------------------------------/n");
+}
+
+float diskon(int q) {
+    return (q > 5) ? 0.15f : (q > 3) ? 0.10f : 0.0f;
+}
+
+void bayar(Product prod[]) {
+    int total = 0, money = 0, finalPay = 0, i;
+    float dTotal = 0;
+    for (i = 0; i < N; i++) {
+        if (prod[i].qty > 0) {
+            int sub = prod[i].price * prod[i].qty;
+            total += sub;
+            dTotal += sub * diskon(prod[i].qty);
+        }
+    }
+    finalPay = total - (int)dTotal;
+    do {
+        printf("Total Belanja      : Rp.%d/n", total);
+        printf("Total Diskon       : Rp.%.0f/n", dTotal);
+        printf("Total yang harus dibayar: Rp.%d/n", finalPay);
+        printf("Masukkan jumlah uang: Rp.");
+        scanf("%d", &money);
+        if (money < finalPay)
+            printf("Uang tidak cukup! Silahkan coba lagi./n");
+    } while (money < finalPay);
+    int change = money - finalPay;
+
+    system("cls");  // Gunakan system("clear") jika di Linux/Mac
+    time_t now = time(NULL);
+    char *tstr = ctime(&now);
+    printf("========== STRUK PEMBAYARAN ==========/n");
+    printf("TOKO SKENSA/n");
+    printf("Jl. Contoh No. 123/n");
+    printf("Telp: 08123456789/n");
+    printf("Tanggal: %s", tstr);
+    printf("--------------------------------------/n");
+    for (i = 0; i < N; i++) {
+        if (prod[i].qty > 0)
+            printf("%-15s %2d x Rp.%-5d = Rp.%d/n", prod[i].name, prod[i].qty, prod[i].price, prod[i].qty * prod[i].price);
+    }
+    printf("--------------------------------------/n");
+    printf("Total Belanja      : Rp.%d/n", total);
+    printf("Diskon             : -Rp.%.0f/n", dTotal);
+    printf("Total Pembayaran   : Rp.%d/n", finalPay);
+    printf("Tunai              : Rp.%d/n", money);
+    printf("Kembalian          : Rp.%d/n", change);
+    printf("======================================/n");
+    printf("Terima kasih telah berbelanja!/n");
+
+    char fname[100];
+    genFile(fname);
+    FILE *fp = fopen(fname, "w");
+    if (fp) {
+        fprintf(fp, "========== STRUK PEMBAYARAN ==========/n");
+        fprintf(fp, "TOKO SKENSA/n");
+        fprintf(fp, "Jl. Contoh No. 123/n");
+        fprintf(fp, "Telp: 08123456789/n");
+        fprintf(fp, "Tanggal: %s", tstr);
+        fprintf(fp, "--------------------------------------/n");
+        for (i = 0; i < N; i++) {
+            if (prod[i].qty > 0)
+                fprintf(fp, "%-15s %2d x Rp.%-5d = Rp.%d/n", prod[i].name, prod[i].qty, prod[i].price, prod[i].qty * prod[i].price);
+        }
+        fprintf(fp, "--------------------------------------/n");
+        fprintf(fp, "Total Belanja      : Rp.%d/n", total);
+        fprintf(fp, "Diskon             : -Rp.%.0f/n", dTotal);
+        fprintf(fp, "Total Pembayaran   : Rp.%d/n", finalPay);
+        fprintf(fp, "Tunai              : Rp.%d/n", money);
+        fprintf(fp, "Kembalian          : Rp.%d/n", change);
+        fprintf(fp, "======================================/n");
+        fprintf(fp, "Terima kasih telah berbelanja!/n");
+        fclose(fp);
+        printf("Struk disimpan: %s/n", fname);
+    }
+
+    for (i = 0; i < N; i++)
+        prod[i].qty = 0;
+    printf("Tekan Enter untuk melanjutkan...");
+    getchar(); getchar();
+}
+
+int main() {
+    Product prod[N] = {
+        {"Buku Tulis", 5000, 0},
+        {"Pensil", 2000, 0},
+        {"Penghapus", 1000, 0},
+        {"Penggaris", 1000, 0},
+        {"Bujur Sangkar", 500, 0}
+    };
+
+    int pilihan, qty, i;
+    char t;
+    do {
+        system("cls");  // gunakan system("clear") di Linux/Mac
+        header();
+        int ada = 0;
+        for (i = 0; i < N; i++) {
+            if (prod[i].qty > 0) { 
+                ada = 1;
+                break;
+            }
+        }
+        if (ada) {
+            printf("/nPesanan Anda saat ini:/n");
+            orderSum(prod);
+        }
+        printf("/nMasukkan pilihan: ");
+        scanf("%d", &pilihan);
+        if (pilihan >= 1 && pilihan <= N) {
+            printf("Masukkan jumlah %s: ", prod[pilihan - 1].name);
+            scanf("%d", &qty);
+            prod[pilihan - 1].qty += qty;
+            printf("Ingin menambah barang lagi? (y/n): ");
+            scanf(" %c", &t);
+            if (t == 'n' || t == 'N')
+                bayar(prod);
+        } else if (pilihan == 55) {
+            for (i = 0; i < N; i++)
+                prod[i].qty = 0;
+            printf("Pesanan direset./n");
+            getchar(); getchar();
+        } else if (pilihan == 99) {
+            if (ada)
+                bayar(prod);
+            else {
+                printf("Tidak ada pesanan./n");
+                getchar(); getchar();
+            }
+        }
+    } while (pilihan != 0);
+    
+    printf("Terima kasih telah berbelanja!/n");
+    return 0;
+}`);
+        } else if (username === 'mewing') {
+            closeLoginPopup();
+            showCopyPopup(`#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <ctype.h>
+
+#define MAX_ITEMS 5
+#define MAX_NAME_LEN 50
+#define MAX_ADDRESS_LEN 100
+#define FILENAME_FORMAT "struk_%ld.txt"
+#define STORE_PHONE "0816285791"
+#define STORE_ADDRESS "Jl. HOS Cokroaminoto No. 84, Denpasar, Bali"
+
+typedef struct {
+    char name[20];
+    int price;
+    int quantity;
+    int discount;
+} Item;
+
+// Prototipe fungsi
+void initialize_items(Item items[]);
+void display_menu(const Item items[]);
+void handle_selection(Item items[], int choice);
+void calculate_discounts(Item items[]);
+void sort_items(Item items[]);
+void process_checkout(Item items[]);
+void save_receipt(const Item items[], int total, int total_discount, int payment);
+void clear_input_buffer();
+int get_valid_input(const char *prompt, int min_val);
+void reset_items(Item items[]);
+
+// Inisialisasi item
+void initialize_items(Item items[]) {
+    Item initial_items[MAX_ITEMS] = {
+        {"Buku Tulis", 5000, 0, 0},
+        {"Pensil", 2000, 0, 0},
+        {"Penghapus", 1000, 0, 0},
+        {"Penggaris", 1000, 0, 0},
+        {"Bujur Sangkar", 500, 0, 0}
+    };
+    memcpy(items, initial_items, sizeof(initial_items));
+}
+
+// Tampilan menu utama
+void display_menu(const Item items[]) {
+    system("cls || clear");
+    printf("/n=== Toko SKENSA ===/n");
+    printf("%-4s %-15s %-10s/n", "No.", "Barang", "Harga");
+    printf("--------------------------------/n");
+    
+    for(int i = 0; i < MAX_ITEMS; i++) {
+        printf("%-4d %-15s Rp.%-8d/n", 
+              i+1, items[i].name, items[i].price);
+    }
+    
+    printf("/n%-2d. Checkout/n", 99);
+    printf("%-2d. Reset/n", 55);
+    printf("%-2d. Keluar/n/n", 0);
+}
+
+// Hitung diskon
+void calculate_discounts(Item items[]) {
+    for(int i = 0; i < MAX_ITEMS; i++) {
+        if(items[i].quantity > 5) {
+            items[i].discount = items[i].price * items[i].quantity * 15 / 100;
+        } else if(items[i].quantity > 3) {
+            items[i].discount = items[i].price * items[i].quantity * 10 / 100;
+        } else {
+            items[i].discount = 0;
+        }
+    }
+}
+
+// Urutkan item berdasarkan quantity
+void sort_items(Item items[]) {
+    for(int i = 0; i < MAX_ITEMS-1; i++) {
+        for(int j = 0; j < MAX_ITEMS-i-1; j++) {
+            if(items[j].quantity < items[j+1].quantity) {
+                Item temp = items[j];
+                items[j] = items[j+1];
+                items[j+1] = temp;
+            }
+        }
+    }
+}
+
+// Proses checkout
+void process_checkout(Item items[]) {
+    system("cls || clear");
+    int total = 0, total_discount = 0;
+    
+    calculate_discounts(items);
+    sort_items(items);
+
+    // Hitung total
+    for(int i = 0; i < MAX_ITEMS; i++) {
+        if(items[i].quantity > 0) {
+            total += items[i].price * items[i].quantity;
+            total_discount += items[i].discount;
+        }
+    }
+
+    // Tampilkan rekapan
+    printf("/n=== Rekap Pembelian ===/n");
+    printf("%-5s %-15s %-10s %-10s %-10s/n", 
+          "Qty", "Barang", "Harga", "Subtotal", "Diskon");
+    printf("------------------------------------------------/n");
+    
+    for(int i = 0; i < MAX_ITEMS; i++) {
+        if(items[i].quantity > 0) {
+            int subtotal = items[i].price * items[i].quantity;
+            printf("%-5d %-15s Rp.%-7d Rp.%-7d Rp.%-7d/n",
+                  items[i].quantity,
+                  items[i].name,
+                  items[i].price,
+                  subtotal,
+                  items[i].discount);
+        }
+    }
+    
+    printf("/nTotal Belanja: Rp.%d/n", total);
+    printf("Total Diskon:  Rp.%d/n", total_discount);
+    printf("Total Bayar:   Rp.%d/n", total - total_discount);
+    
+    // Input pembayaran
+    int payment = get_valid_input("/nMasukkan uang bayar: Rp.", total - total_discount);
+    save_receipt(items, total, total_discount, payment);
+    
+    printf("/nKembalian: Rp.%d/n", payment - (total - total_discount));
+    printf("Struk telah disimpan!/n");
+}
+
+void reset_items(Item items[]) {
+    for(int i = 0; i < MAX_ITEMS; i++) {
+        items[i].quantity = 0;
+        items[i].discount = 0;
+    }
+}
+
+// Simpan struk ke file
+void save_receipt(const Item items[], int total, int total_discount, int payment) {
+    time_t now = time(NULL);
+    char filename[50];
+    snprintf(filename, sizeof(filename), FILENAME_FORMAT, now);
+    
+    FILE *file = fopen(filename, "w");
+    if(!file) return;
+    
+    fprintf(file, "=== Toko SKENSA ===/n");
+    fprintf(file, "%s/n", STORE_ADDRESS);
+    fprintf(file, "Telp: %s/n/n", STORE_PHONE);
+    fprintf(file, "%-5s %-15s %-10s %-10s %-10s/n", 
+           "Qty", "Barang", "Harga", "Subtotal", "Diskon");
+    fprintf(file, "-----------------------------------------------/n");
+    
+    for(int i = 0; i < MAX_ITEMS; i++) {
+        if(items[i].quantity > 0) {
+            int subtotal = items[i].price * items[i].quantity;
+            fprintf(file, "%-5d %-15s Rp.%-7d Rp.%-7d Rp.%-7d/n",
+                  items[i].quantity,
+                  items[i].name,
+                  items[i].price,
+                  subtotal,
+                  items[i].discount);
+        }
+    }
+    
+    fprintf(file, "/nTotal Belanja: Rp.%d/n", total);
+    fprintf(file, "Total Diskon:  Rp.%d/n", total_discount);
+    fprintf(file, "Total Bayar:   Rp.%d/n", total - total_discount);
+    fprintf(file, "Pembayaran:    Rp.%d/n", payment);
+    fprintf(file, "Kembalian:     Rp.%d/n", payment - (total - total_discount));
+    fprintf(file, "/nTanggal: %s", ctime(&now));
+    fclose(file);
+}
+
+// Validasi input
+int get_valid_input(const char *prompt, int min_val) {
+    int value;
+    while(1) {
+        printf("%s", prompt);
+        if(scanf("%d", &value) != 1) {
+            printf("Input tidak valid! ");
+            clear_input_buffer();
+            continue;
+        }
+        if(value >= min_val) break;
+        printf("Nilai harus >= %d! ", min_val);
+    }
+    return value;
+}
+
+void clear_input_buffer() {
+    int c;
+    while((c = getchar()) != '/n' && c != EOF);
+}
+
+int main() {
+    Item items[MAX_ITEMS];
+    initialize_items(items);
+    
+    while(1) {
+        display_menu(items);
+        printf("Pilihan: ");
+        int choice;
+        if(scanf("%d", &choice) != 1) {
+            clear_input_buffer();
+            printf("Input tidak valid!/n");
+            continue;
+        }
+        
+        if(choice == 0) break;
+        if(choice == 99) process_checkout(items);
+        else if(choice == 55) {
+            reset_items(items);
+            printf("Semua item telah direset!/n");
+        }
+        else if(choice >= 1 && choice <= MAX_ITEMS) {
+            int qty = get_valid_input("Jumlah: ", 1);
+            items[choice-1].quantity += qty;
+            printf("%s ditambahkan!/n", items[choice-1].name);
+        }
+        else printf("Pilihan salah!/n");
+        
+        clear_input_buffer();
+        printf("/nTekan enter untuk lanjut...");
+        getchar();
+    }
+    
+    printf("/nTerima kasih!/n");
+    return 0;
+}`);
+        } else if (username === 'bayu') {
+            closeLoginPopup();
+            showCopyPopup(`#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <ctype.h>
+#include <windows.h>
+
+#define MAX_ITEMS 5
+#define MAX_NAME_LEN 50
+#define MAX_ADDRESS_LEN 100
+#define FILENAME_FORMAT "struk_%ld.txt"
+#define STORE_PHONE "0816285791"
+#define STORE_ADDRESS "Jl. HOS Cokroaminoto No. 84, Denpasar, Bali"
+
+typedef struct {
+    char name[20];
+    int price;
+    int quantity;
+    int discount;
+} Item;
+
+void setColor(int color) {
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, color);
+}
+
+// Prototipe fungsi
+void initialize_items(Item items[]);
+void display_menu(const Item items[]);
+void calculate_discounts(Item items[]);
+void sort_items(Item items[]);
+void process_checkout(Item items[]);
+void save_receipt(const Item items[], int total, int total_discount, int payment);
+void clear_input_buffer();
+int get_valid_input(const char *prompt, int min_val);
+void edit_selected_items(Item items[]);
+int is_cart_empty(const Item items[]);
+
+// Inisialisasi item
+void initialize_items(Item items[]) {
+    Item initial_items[MAX_ITEMS] = {
+        {"Buku Tulis", 5000, 0, 0},
+        {"Pensil", 2000, 0, 0},
+        {"Penghapus", 1000, 0, 0},
+        {"Penggaris", 1000, 0, 0},
+        {"Bujur Sangkar", 500, 0, 0}
+    };
+    memcpy(items, initial_items, sizeof(initial_items));
+}
+
+// Tampilan menu utama
+void display_menu(const Item items[]) {
+    system("cls || clear");
+    setColor(15);
+    printf("Selamat datang di Toko SKENSA./n");
+    printf("Silakan pilih barang yang Anda inginkan:/n/n");
+    printf("============================================/n");
+    printf("|No.| Barang               | Harga         |/n");
+    printf("============================================/n");
+    
+    int i;
+    for(i = 0; i < MAX_ITEMS; i++) {
+        printf("| %d | %-20s | Rp.%-10d |/n", 
+              i+1, items[i].name, items[i].price);
+    }
+    
+    printf("============================================/n");
+    printf("99. Struk Pembayaran/n");
+    printf("77. Edit Barang/n");
+    printf("55. Reset pilihan/n");
+    printf("00. Keluar/n");
+    printf("============================================/n");
+}
+
+// Hitung diskon
+void calculate_discounts(Item items[]) {
+    int i;
+    for(i = 0; i < MAX_ITEMS; i++) {
+        if(items[i].quantity > 5) {
+            items[i].discount = items[i].price * items[i].quantity * 15 / 100;
+        } else if(items[i].quantity > 3) {
+            items[i].discount = items[i].price * items[i].quantity * 10 / 100;
+        } else {
+            items[i].discount = 0;
+        }
+    }
+}
+
+// Urutkan item berdasarkan quantity
+void sort_items(Item items[]) {
+    int i, j;
+    for(i = 0; i < MAX_ITEMS-1; i++) {
+        for(j = 0; j < MAX_ITEMS-i-1; j++) {
+            if(items[j].quantity < items[j+1].quantity) {
+                Item temp = items[j];
+                items[j] = items[j+1];
+                items[j+1] = temp;
+            }
+        }
+    }
+}
+
+// Proses checkout
+void process_checkout(Item items[]) {
+    system("cls || clear");
+    int total = 0, total_discount = 0;
+    
+    calculate_discounts(items);
+    sort_items(items);
+
+    // Hitung total
+    int i;
+    for(i = 0; i < MAX_ITEMS; i++) {
+        if(items[i].quantity > 0) {
+            total += items[i].price * items[i].quantity;
+            total_discount += items[i].discount;
+        }
+    }
+
+    // Tampilkan rekapan
+    printf("/nRekap Pesanan Barang/n");
+    printf("==========================================================================/n");
+    printf("|%-3s| %-7s| %-15s| %-12s| %-14s| %-11s|/n", 
+           "No.", "Jumlah", "Nama Barang", "Harga", "Total Harga", "Diskon");
+    printf("==========================================================================/n");
+    
+    int counter = 1;
+    for(i = 0; i < MAX_ITEMS; i++) {
+        if(items[i].quantity > 0) {
+            int subtotal = items[i].price * items[i].quantity;
+            
+            char harga_str[20], total_str[20], diskon_str[20];
+            snprintf(harga_str, sizeof(harga_str), "Rp.%6d,-", items[i].price);
+            snprintf(total_str, sizeof(total_str), "Rp.%6d,-", subtotal);
+            snprintf(diskon_str, sizeof(diskon_str), "Rp.%6d,-", items[i].discount);
+            
+            printf("|%-3d| %-7d| %-15s| %-12s| %-14s| %-11s|/n",
+                   counter++,
+                   items[i].quantity,
+                   items[i].name,
+                   harga_str,
+                   total_str,
+                   diskon_str);
+        }
+    }
+    
+    printf("==========================================================================/n/n");
+    
+    char total_fmt[20], diskon_fmt[20], bayar_fmt[20];
+    snprintf(total_fmt, sizeof(total_fmt), "Rp.%6d,-", total);
+    snprintf(diskon_fmt, sizeof(diskon_fmt), "Rp.%6d,-", total_discount);
+    snprintf(bayar_fmt, sizeof(bayar_fmt), "Rp.%6d,-", total - total_discount);
+    
+    printf("%-15s = %-15s/n", "Total Harga", total_fmt);
+    printf("%-15s = %-15s/n", "Total Diskon", diskon_fmt);
+    printf("%-15s = %-15s/n", "Total Bayar", bayar_fmt);
+    printf("==========================================================================/n");
+    
+    int payment = get_valid_input("/nMasukkan uang bayar: Rp.", total - total_discount);
+    
+    int kembalian = payment - (total - total_discount);
+    char payment_fmt[20], kembalian_fmt[20];
+    snprintf(payment_fmt, sizeof(payment_fmt), "Rp.%d,-", payment);
+    snprintf(kembalian_fmt, sizeof(kembalian_fmt), "Rp.%d,-", kembalian);
+    
+    printf("/n%-15s = %-15s/n", "Pembayaran", payment_fmt);
+    printf("%-15s = %-15s/n", "Kembalian", kembalian_fmt);
+    
+    save_receipt(items, total, total_discount, payment);
+    setColor(2);
+    printf("/nStruk telah disimpan!/n");
+    setColor(15);
+    initialize_items(items); // Kosongkan keranjang setelah struk disimpan
+}
+
+// Simpan struk ke file
+void save_receipt(const Item items[], int total, int total_discount, int payment) {
+    time_t now = time(NULL);
+    char filename[50];
+    snprintf(filename, sizeof(filename), FILENAME_FORMAT, now);
+    
+    FILE *file = fopen(filename, "w");
+    if(!file) return;
+    
+    fprintf(file, "==========================================================/n");
+    fprintf(file, "|                       Toko SKENSA                      |/n");
+    fprintf(file, "|           Jl. HOS Cokroaminoto No. 84, Denpasar        |/n");
+    fprintf(file, "|                           Bali                         |/n");
+    fprintf(file, "|                      Telp : %s                 |/n", STORE_PHONE);
+    fprintf(file, "| ID Struk : %ld                                  |/n", now);
+    fprintf(file, "|========================================================|/n");
+    
+    fprintf(file, "| %-15s | %-10s | %-10s | %-10s |/n", 
+           "Nama Barang", "Harga", "Total", "Diskon");
+    fprintf(file, "|-----------------|------------|------------|------------|/n");
+    
+    int i;
+    for(i = 0; i < MAX_ITEMS; i++) {
+        if(items[i].quantity > 0) {
+            int subtotal = items[i].price * items[i].quantity;
+            fprintf(file, "| %-2dx%-12s | Rp.%-7d | Rp.%-7d | Rp.%-7d |/n",
+                  items[i].quantity,
+                  items[i].name,
+                  items[i].price,
+                  subtotal,
+                  items[i].discount);
+        }
+    }
+    
+    fprintf(file, "|========================================================|/n");
+    char temp[50];	
+    snprintf(temp, sizeof(temp), "Rp.%d,-", total);
+    fprintf(file, "| %-12s = %-40s|/n", "Total Harga", temp);
+
+    snprintf(temp, sizeof(temp), "Rp.%d,-", total_discount);
+    fprintf(file, "| %-12s = %-40s|/n", "Total Diskon", temp);
+
+    snprintf(temp, sizeof(temp), "Rp.%d,-", total - total_discount);
+    fprintf(file, "| %-12s = %-40s|/n", "Tagihan", temp);
+
+    snprintf(temp, sizeof(temp), "Rp.%d,-", payment);
+    fprintf(file, "| %-12s = %-40s|/n", "Pembayaran", temp);
+
+    snprintf(temp, sizeof(temp), "Rp.%d,-", payment - (total - total_discount));
+    fprintf(file, "| %-12s = %-40s|/n", "Kembalian", temp);
+    
+    char *time_str = ctime(&now);
+    time_str[strcspn(time_str, "/n")] = '/0';
+    fprintf(file, "|                                                        |/n");
+    fprintf(file, "| Waktu/Hari : %s                  |/n", time_str);
+    fprintf(file, "==========================================================/n");
+    
+    fclose(file);
+}
+
+// Validasi input
+int get_valid_input(const char *prompt, int min_val) {
+    int value;
+    while(1) {
+        printf("%s", prompt);
+        if(scanf("%d", &value) != 1) {
+            printf("Input tidak valid! ");
+            clear_input_buffer();
+            continue;
+        }
+        if(value >= min_val) break;
+        printf("Nilai harus >= %d! ", min_val);
+    }
+    return value;
+}
+
+void clear_input_buffer() {
+    int c;
+    while((c = getchar()) != '/n' && c != EOF);
+}
+
+// Fungsi untuk memeriksa apakah keranjang kosong
+int is_cart_empty(const Item items[]) {
+    int i;
+    for(i = 0; i < MAX_ITEMS; i++) {
+        if(items[i].quantity > 0) {
+            return 0; // Ada barang, tidak kosong
+        }
+    }
+    return 1; // Tidak ada barang, kosong
+}
+
+// Fungsi edit barang
+void edit_selected_items(Item items[]) {
+    system("cls || clear");
+    setColor(15);
+    printf("Daftar Barang yang Dipilih:/n");
+    printf("============================================/n");
+    printf("|No.| Barang               | Jumlah        |/n");
+    printf("============================================/n");
+
+    int i, counter = 0;
+    int selected_indices[MAX_ITEMS];
+    for(i = 0; i < MAX_ITEMS; i++) {
+        if(items[i].quantity > 0) {
+            printf("| %d | %-20s | %-13d |/n", 
+                  counter + 1, items[i].name, items[i].quantity);
+            selected_indices[counter] = i;
+            counter++;
+        }
+    }
+    printf("============================================/n");
+
+    char prompt[50];
+    snprintf(prompt, sizeof(prompt), "Pilih nomor barang untuk diedit (1-%d): ", counter);
+    int choice = get_valid_input(prompt, 1);
+    
+    if(choice > counter) {
+        setColor(12);
+        printf("Pilihan tidak valid!/n");
+        setColor(15);
+        return;
+    }
+
+    int selected_index = selected_indices[choice - 1];
+    printf("Barang: %s, Jumlah saat ini: %d/n", items[selected_index].name, items[selected_index].quantity);
+    int new_qty = get_valid_input("Masukkan jumlah baru (0 untuk hapus): ", 0);
+    
+    items[selected_index].quantity = new_qty;
+    setColor(10);
+    if(new_qty == 0) {
+        printf("%s telah dihapus dari daftar belanja!/n", items[selected_index].name);
+    } else {
+        printf("%s diperbarui menjadi %d unit!/n", items[selected_index].name, new_qty);
+    }
+    setColor(15);
+}
+
+int main() {
+    Item items[MAX_ITEMS];
+    initialize_items(items);
+    
+    while(1) {
+        display_menu(items);
+        printf("Masukkan kode produk: ");
+        int choice;
+        if(scanf("%d", &choice) != 1) {
+            clear_input_buffer();
+            setColor(12);
+            printf("Input tidak valid!/n");
+            setColor(15);
+            continue;
+        }
+        
+        if(choice == 0 || choice == 00) {
+            break;
+        }
+        else if(choice == 99) {
+            if(is_cart_empty(items)) {
+                setColor(12);
+                printf("Barang masih kosong!/n");
+                setColor(15);
+            } else {
+                process_checkout(items);
+            }
+        }
+        else if(choice == 77) {
+            if(is_cart_empty(items)) {
+                setColor(12);
+                printf("Barang masih kosong!/n");
+                setColor(15);
+            } else {
+                edit_selected_items(items);
+            }
+        }
+        else if(choice == 55) {
+            if(is_cart_empty(items)) {
+                setColor(12);
+                printf("Barang masih kosong!/n");
+                setColor(15);
+            } else {
+                initialize_items(items);
+                setColor(10);
+                printf("Pilihan telah direset!/n");
+                setColor(15);
+            }
+        }
+        else if(choice >= 1 && choice <= MAX_ITEMS) {
+            int qty = get_valid_input("Jumlah: ", 1);
+            items[choice-1].quantity += qty;
+            setColor(10);
+            printf("%s ditambahkan!/n", items[choice-1].name);
+            setColor(15);
+        }
+        else {
+            setColor(12);
+            printf("Pilihan salah!/n");
+            setColor(15);
+        }
+    
+        clear_input_buffer();
+        printf("/nTekan enter untuk lanjut...");
+        getchar();
+    }
+    
+    setColor(10);
+    printf("/nTerima kasih!/n");
+    setColor(15);
+    return 0;
+}`);
+        } else {
+            alert('Invalid username!');
+        }
+    });
+</script>
+    <script>
+        // Navigation between sections
+        document.querySelectorAll('.sidebar-item').forEach(item => {
+            item.addEventListener('click', function() {
+                // Remove active class from all sidebar items and content sections
+                document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
+                document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
+                
+                // Add active class to clicked sidebar item
+                this.classList.add('active');
+                
+                // Show corresponding content section
+                const sectionId = this.getAttribute('data-section');
+                document.getElementById(sectionId).classList.add('active');
+            });
+        });
+
+        // Copy code functionality
+        document.getElementById('copy-btn').addEventListener('click', function() {
+            const codeBlock = this.parentElement.querySelector('code');
+            const range = document.createRange();
+            range.selectNode(codeBlock);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand('copy');
+            window.getSelection().removeAllRanges();
+            
+            // Visual feedback
+            const originalText = this.textContent;
+            this.textContent = 'Copied!';
+            this.classList.add('copied');
+            
+            setTimeout(() => {
+                this.textContent = originalText;
+                this.classList.remove('copied');
+            }, 2000);
+        });
+
+        // Add copy buttons to all code blocks
+        document.querySelectorAll('.code-block').forEach(block => {
+            const btn = document.createElement('button');
+            btn.className = 'absolute top-2 right-2 bg-gray-700 text-white px-2 py-1 rounded text-sm';
+            btn.textContent = 'Copy';
+            
+            btn.addEventListener('click', function() {
+                const codeBlock = this.parentElement.querySelector('code');
+                const range = document.createRange();
+                range.selectNode(codeBlock);
+                window.getSelection().removeAllRanges();
+                window.getSelection().addRange(range);
+                document.execCommand('copy');
+                window.getSelection().removeAllRanges();
+                
+                // Visual feedback
+                const originalText = this.textContent;
+                this.textContent = 'Copied!';
+                this.classList.add('copied');
+                
+                setTimeout(() => {
+                    this.textContent = originalText;
+                    this.classList.remove('copied');
+                }, 2000);
+            });
+            
+            block.style.position = 'relative';
+            block.appendChild(btn);
+        });
+    </script>
+</body>
+</html>

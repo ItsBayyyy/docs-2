@@ -1,0 +1,93 @@
+Here's how we can add the features you requested for your program:
+
+### 1. **Fitur 1: Fungsi Edit Barang yang Telah Dipilih**
+This feature allows the user to modify the quantity of the items in the cart, including the option to remove the item completely from the cart by setting the quantity to zero.
+
+The current function `edit_selected_items()` already handles this. It displays the list of selected items and lets the user edit the quantity or remove the item.
+
+### 2. **Fitur 2: Fungsi Sort Berdasarkan Kuantitas**
+This feature sorts the items based on their quantity, so that the user can view the items with the highest quantity first.
+
+The current function `sort_items()` already does this by comparing the quantity of each item and sorting them in descending order.
+
+Let's break down how the features work:
+
+### Changes Made:
+1. **Item Editing:**
+   - User can select an item and update its quantity. If the quantity is set to 0, the item will be removed from the cart.
+   
+2. **Sorting Items:**
+   - The items are sorted in descending order based on their quantity, so the items with the highest quantity appear at the top of the list.
+
+### Additional Consideration
+- **Input Validation:** Ensure that the user's input is validated when editing the item quantity or selecting items to edit. This is handled using `get_valid_input()` which ensures that the user inputs a valid number.
+
+Your program already includes these features, but here's how the related functions look:
+
+```c
+// Fungsi untuk mengedit barang yang dipilih
+void edit_selected_items(Item items[]) {
+    system("cls || clear");
+    setColor(15);
+    printf("Daftar Barang yang Dipilih:\n");
+    printf("============================================\n");
+    printf("|No.| Barang               | Jumlah        |\n");
+    printf("============================================\n");
+
+    int i, counter = 0;
+    int selected_indices[MAX_ITEMS];
+    for(i = 0; i < MAX_ITEMS; i++) {
+        if(items[i].quantity > 0) {
+            printf("| %d | %-20s | %-13d |\n", 
+                  counter + 1, items[i].name, items[i].quantity);
+            selected_indices[counter] = i;
+            counter++;
+        }
+    }
+    printf("============================================\n");
+
+    char prompt[50];
+    snprintf(prompt, sizeof(prompt), "Pilih nomor barang untuk diedit (1-%d): ", counter);
+    int choice = get_valid_input(prompt, 1);
+    
+    if(choice > counter) {
+        setColor(12);
+        printf("Pilihan tidak valid!\n");
+        setColor(15);
+        return;
+    }
+
+    int selected_index = selected_indices[choice - 1];
+    printf("Barang: %s, Jumlah saat ini: %d\n", items[selected_index].name, items[selected_index].quantity);
+    int new_qty = get_valid_input("Masukkan jumlah baru (0 untuk hapus): ", 0);
+    
+    items[selected_index].quantity = new_qty;
+    setColor(10);
+    if(new_qty == 0) {
+        printf("%s telah dihapus dari daftar belanja!\n", items[selected_index].name);
+    } else {
+        printf("%s diperbarui menjadi %d unit!\n", items[selected_index].name, new_qty);
+    }
+    setColor(15);
+}
+
+// Fungsi untuk mengurutkan item berdasarkan kuantitas
+void sort_items(Item items[]) {
+    int i, j;
+    for(i = 0; i < MAX_ITEMS-1; i++) {
+        for(j = 0; j < MAX_ITEMS-i-1; j++) {
+            if(items[j].quantity < items[j+1].quantity) {
+                Item temp = items[j];
+                items[j] = items[j+1];
+                items[j+1] = temp;
+            }
+        }
+    }
+}
+```
+
+These updates will allow the user to:
+- Edit the quantity of items or remove them entirely.
+- See the items sorted in descending order by quantity.
+
+Let me know if you need further clarification or adjustments!
